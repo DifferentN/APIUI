@@ -1,0 +1,52 @@
+#include "apiinfo.h"
+#include "ui_apiinfo.h"
+
+APIInfo::APIInfo(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::APIInfo)
+{
+    ui->setupUi(this);
+}
+APIInfo::APIInfo(QWidget *parent,QList<QString> *list):
+    QDialog(parent),
+    ui(new Ui::APIInfo){
+    ui->setupUi(this);
+    paramLabels = list;
+    
+}
+
+APIInfo::~APIInfo()
+{
+    delete ui;
+}
+void APIInfo::init(){
+    ui->APIName->setText(urlPart2);
+    ui->APIUrl->setText(urlPart1+""+urlPart2);
+    for(auto paramItem:*paramLabels){
+        addParameterItem(paramItem);
+    }
+}
+/**
+ * @brief APIInfo::addParameterItem
+ * @param labelText
+ * 显示API URL中的参数，其值为用户给定的输入标签
+ */
+void APIInfo::addParameterItem(QString labelText){
+    //将一个输入标签放到显示布局中
+    QHBoxLayout *layout =new QHBoxLayout();
+    QLabel *paramLabel = new QLabel();
+    paramLabel->setText(labelText);
+    layout->addWidget(paramLabel);
+    
+    QWidget *widget = new QWidget();
+    widget->setLayout(layout);
+    //将包含输入标签的布局放到scrollArea中
+    ui->scrollArea->widget()->layout()->addWidget(widget);
+}
+void APIInfo::on_lineEdit_textChanged(const QString &arg1)
+{
+    urlPart2 = arg1;
+    QString url = ""+urlPart1+urlPart2;
+    //显示用户设定上的API URL
+    ui->APIUrl->setText(url);
+}
