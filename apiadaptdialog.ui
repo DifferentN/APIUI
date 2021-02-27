@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>旧版本API</string>
+    <string>应用APK</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="oldAPI">
@@ -54,8 +54,8 @@
     <rect>
      <x>10</x>
      <y>70</y>
-     <width>381</width>
-     <height>16</height>
+     <width>0</width>
+     <height>0</height>
     </rect>
    </property>
    <property name="text">
@@ -67,8 +67,8 @@
     <rect>
      <x>10</x>
      <y>100</y>
-     <width>381</width>
-     <height>20</height>
+     <width>0</width>
+     <height>0</height>
     </rect>
    </property>
   </widget>
@@ -77,8 +77,8 @@
     <rect>
      <x>410</x>
      <y>100</y>
-     <width>75</width>
-     <height>23</height>
+     <width>0</width>
+     <height>0</height>
     </rect>
    </property>
    <property name="text">
@@ -90,8 +90,8 @@
     <rect>
      <x>10</x>
      <y>130</y>
-     <width>371</width>
-     <height>16</height>
+     <width>0</width>
+     <height>0</height>
     </rect>
    </property>
    <property name="text">
@@ -103,8 +103,8 @@
     <rect>
      <x>10</x>
      <y>160</y>
-     <width>381</width>
-     <height>20</height>
+     <width>0</width>
+     <height>0</height>
     </rect>
    </property>
   </widget>
@@ -113,8 +113,8 @@
     <rect>
      <x>410</x>
      <y>160</y>
-     <width>75</width>
-     <height>23</height>
+     <width>0</width>
+     <height>0</height>
     </rect>
    </property>
    <property name="text">
@@ -131,7 +131,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>进行API自适应调整</string>
+    <string>开始分析APK信息</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_4">
@@ -144,7 +144,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>新版本API</string>
+    <string>分析结果</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="newAPI">

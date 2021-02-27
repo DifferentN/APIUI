@@ -14,11 +14,11 @@ void APIAdaptWorkThread::createJNIEnv(JavaVM *jvm){
 void APIAdaptWorkThread::on_startAPIAdapt(QString oldAPIPath,QString oldInvokePath,QString newInvokePath,JavaVM *jvm){
     createJNIEnv(jvm);
     //包名/类名
-    jclass cls = env->FindClass("exhibit/selfAdapter/SelfAdapter");
+    jclass cls = env->FindClass("tool/ObtainClassTool");
     if(cls==NULL){
         qDebug()<<"not find class"<<endl;
     }
-    jmethodID generateMid = env->GetStaticMethodID(cls,"adjustOldAPI","(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;");
+    jmethodID generateMid = env->GetStaticMethodID(cls,"obtainAPKInfo","(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;");
 
     char *src1 = LinkJava::qStringTostring(oldAPIPath);
     jstring arg1 = LinkJava::charTojstring(env,src1);
@@ -29,6 +29,7 @@ void APIAdaptWorkThread::on_startAPIAdapt(QString oldAPIPath,QString oldInvokePa
     char *src3 = LinkJava::qStringTostring(newInvokePath);
     jstring arg3 = LinkJava::charTojstring(env,src3);
 
+    qDebug()<<"QT start analyse"<<endl;
     jstring res = (jstring)env->CallStaticObjectMethod(cls,generateMid,arg1,arg2,arg3);
     char* apiPath = LinkJava::JStringToCString(env,res);
     QString newAPIPath(apiPath);

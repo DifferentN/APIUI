@@ -71,7 +71,7 @@ void APIAdaptDialog::on_openNewInvokeFile_clicked()
 void APIAdaptDialog::on_executeAPIAdapt_clicked()
 {
 
-    ui->newAPI->setText("正在调整API...");
+    ui->newAPI->setText("正在分析APK...");
 //    waitDialog->setModal(false);
 //    waitDialog->show();
     qDebug()<<"adjust api"<<endl;
@@ -86,7 +86,7 @@ void APIAdaptDialog::on_apiAdaptFinish(QString result){
 
     ui->newAPI->setText(result);
     //展示分析结果
-    AnalyseResultDialog *dialog = new AnalyseResultDialog();
-    dialog->setModal(false);
-    dialog->show();
+//    AnalyseResultDialog *dialog = new AnalyseResultDialog();
+//    dialog->setModal(false);
+//    dialog->show();
 }
