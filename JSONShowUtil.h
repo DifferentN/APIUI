@@ -15,7 +15,6 @@ class JSONShowUtil{
         JSONShowUtil();
         ~JSONShowUtil();
     private:
-        QString METHOD_NAME = "methodName";
         QJsonArray readInstanceJSONArray(QString path);
         QTreeWidgetItem * addEvents(QTreeWidget *treeWidght,QJsonArray eventJSONArray,QString title);
         void addEvent(QTreeWidgetItem *parentItem,QJsonObject eventJSON);

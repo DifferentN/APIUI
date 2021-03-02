@@ -9,7 +9,7 @@ LinkJava::~LinkJava(){
 void LinkJava::init(){
     options[0].optionString="-Djava.compiler=NONE";
     //指定classpath,如果需要使用自己的类（或第三方jar包），先打包成jar包，然后添加jar包路径，并以分号隔开
-    options[1].optionString="-Djava.class.path=.;D:\\QTproject\\Test\\myTest.jar;D:\\QTproject\\Test\\analyseMethodLog2.jar;D:\\QTproject\\Test\\APKAnalyse.jar";
+    options[1].optionString="-Djava.class.path=.;D:\\QTproject\\Test\\myTest.jar;D:\\QTproject\\Test\\analyseCallLog.jar";
     //设置显示消息的类型
     options[2].optionString="-verbose:jni";
     vm_args.version = JNI_VERSION_1_4;
@@ -75,7 +75,7 @@ void LinkJava::transformEvent(QString src, QString targetPath){
     if(cls==NULL){
         return;
     }
-    jmethodID mid = env->GetStaticMethodID(cls,"transformEventFile","(Ljava/lang/String;Ljava/lang/String;)V");
+    jmethodID mid = env->GetStaticMethodID(cls,"saveShowEvent","(Ljava/lang/String;Ljava/lang/String;)V");
     char* src1 = qStringTostring(src);
     jstring arg1 = charTojstring(env,src1);
     char* path1 = qStringTostring(targetPath);

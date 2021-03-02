@@ -16,12 +16,11 @@ class APIJSONShow{
         void showAPIJSON(QTreeWidget *treeWidght,QString path);
         static QJsonArray readInstanceJSONArray(QString path);
     private:
-        QString EVENT = "EVENT";
-        QString NEXTWORK = "nextWork";
+        QString API_MODEL = "APIMODEL";
         QJsonObject readAPIJSONObjectFile(QString path);
-        void addWorkFlow(QTreeWidget *treeWidght,QJsonObject workItem,QString title);
+        void addAPIEvents(QTreeWidget *treeWidght,QJsonArray eventJSONArray,QString title);
         void addAPIEvent(QTreeWidgetItem *parentItem,QJsonObject eventJSON);
-        void addAPINextWorks(QTreeWidgetItem *parentItem,QJsonArray nextWorks);
+        void addAPIMethods(QTreeWidgetItem *parentItem,QJsonObject methodJSON);
         void addAPIMethod(QTreeWidgetItem *parentItem,QString methodStr);
     public:
         enum treeTtemType{itTopItem=1001,itGroupItem,itImageItem};

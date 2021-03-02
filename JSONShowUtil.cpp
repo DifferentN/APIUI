@@ -30,11 +30,11 @@ QJsonArray JSONShowUtil::readInstanceJSONArray(QString path){
 }
 QTreeWidgetItem * JSONShowUtil::addEvents(QTreeWidget *treeWidght, QJsonArray eventJSONArray,QString title){
     int size = eventJSONArray.count();
-//    QList<QString> userInputs = getUserInput(eventJSONArray);
+    QList<QString> userInputs = getUserInput(eventJSONArray);
     QTreeWidgetItem *eventItem = new QTreeWidgetItem(JSONShowUtil::itTopItem);
     eventItem->setText(JSONShowUtil::colItem,title);
     eventItem->setFlags(Qt::ItemIsSelectable|Qt::ItemIsUserCheckable|Qt::ItemIsEnabled|Qt::ItemIsAutoTristate);
-//    eventItem->setData(JSONShowUtil::colItem,Qt::UserRole,QVariant::fromValue<QList<QString>>(userInputs));
+    eventItem->setData(JSONShowUtil::colItem,Qt::UserRole,QVariant::fromValue<QList<QString>>(userInputs));
     treeWidght->addTopLevelItem(eventItem);
     for(int i=0;i<size;i++){
         QJsonObject eventJSON = eventJSONArray.at(i).toObject();
@@ -43,13 +43,13 @@ QTreeWidgetItem * JSONShowUtil::addEvents(QTreeWidget *treeWidght, QJsonArray ev
     return eventItem;
 }
 void JSONShowUtil::addEvent(QTreeWidgetItem *parentItem, QJsonObject eventJSON){
-    QString str = eventJSON[METHOD_NAME].toString();
+    QString str = eventJSON["ACTIVITY_NAME"].toString()+"-"+eventJSON["EVENT_NAME"].toString();
     QTreeWidgetItem *eventItem = new QTreeWidgetItem(JSONShowUtil::itTopItem);
     eventItem->setText(JSONShowUtil::colItem,str);
     eventItem->setFlags(Qt::ItemIsSelectable|Qt::ItemIsUserCheckable|Qt::ItemIsEnabled|Qt::ItemIsAutoTristate);
     eventItem->setData(JSONShowUtil::colItem,Qt::UserRole,QVariant("first"));
     parentItem->addChild(eventItem);
-//    addMethods(eventItem,eventJSON.value("INVOKE_LIST").toArray());
+    addMethods(eventItem,eventJSON.value("INVOKE_LIST").toArray());
 
 }
 void JSONShowUtil::addMethods(QTreeWidgetItem *parentItem, QJsonArray methodJSONArray){

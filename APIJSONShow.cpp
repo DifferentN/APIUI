@@ -7,8 +7,8 @@ APIJSONShow::~APIJSONShow(){
 }
 void APIJSONShow::showAPIJSON(QTreeWidget *treeWidght, QString path){
     QJsonObject apiJsonObject = readAPIJSONObjectFile(path);
-    QJsonArray apiEventArray = apiJsonObject[EVENT].toArray();
-    addWorkFlow(treeWidght,apiJsonObject,"WorkFlow");
+    QJsonArray apiEventArray = apiJsonObject[API_MODEL].toArray();
+    addAPIEvents(treeWidght,apiEventArray,"APIModel");
 }
 QJsonArray APIJSONShow::readInstanceJSONArray(QString path){
     QJsonArray jsonArray;
@@ -47,33 +47,31 @@ QJsonObject APIJSONShow::readAPIJSONObjectFile(QString path){
     return jsonObject;
 
 }
-void APIJSONShow::addWorkFlow(QTreeWidget *treeWidght, QJsonObject workItem, QString title){
+void APIJSONShow::addAPIEvents(QTreeWidget *treeWidght, QJsonArray eventJSONArray, QString title){
     QTreeWidgetItem *treeItem = new QTreeWidgetItem(APIJSONShow::itTopItem);
     treeItem->setText(APIJSONShow::colItem,title);
     treeItem->setFlags(Qt::ItemIsSelectable|Qt::ItemIsUserCheckable|Qt::ItemIsEnabled|Qt::ItemIsAutoTristate);
+    int eventNum = eventJSONArray.count();
     treeWidght->addTopLevelItem(treeItem);
-    addAPIEvent(treeItem,workItem);
+    for(int i=0;i<eventNum;i++){
+        QJsonObject eventJSON = eventJSONArray.at(i).toObject();
+        addAPIEvent(treeItem,eventJSON);
+    }
 }
-void APIJSONShow::addAPIEvent(QTreeWidgetItem *parentItem, QJsonObject workItem){
-    //获取当前的操作事件
-    QJsonObject event = workItem[EVENT].toObject();
-    QString str = event["methodName"].toString();
+void APIJSONShow::addAPIEvent(QTreeWidgetItem *parentItem, QJsonObject eventJSON){
+    QString str = eventJSON["ActivityID"].toString()+"-"+eventJSON["methodName"].toString();
     QTreeWidgetItem *eventItem = new QTreeWidgetItem(APIJSONShow::itTopItem);
     eventItem->setText(APIJSONShow::colItem,str);
     eventItem->setFlags(Qt::ItemIsSelectable|Qt::ItemIsUserCheckable|Qt::ItemIsEnabled|Qt::ItemIsAutoTristate);
     parentItem->addChild(eventItem);
-    //获取之后的操作序列
-    QJsonArray nextWorks = workItem[NEXTWORK].toArray();
-    addAPINextWorks(eventItem,nextWorks);
-//    addAPIMethods(eventItem,eventJSON.value("invoke").toObject());
+    addAPIMethods(eventItem,eventJSON.value("invoke").toObject());
 }
-void APIJSONShow::addAPINextWorks(QTreeWidgetItem *parentItem, QJsonArray nextWorks){
-    int size = nextWorks.size();
-    if(size>0){
-        for(int i=0;i<size;i++){
-            QJsonObject workItem = nextWorks.at(i).toObject();
-            addAPIEvent(parentItem,workItem);
-        }
+void APIJSONShow::addAPIMethods(QTreeWidgetItem *parentItem, QJsonObject methodJSON){
+    int size = methodJSON["invokeSize"].toInt();
+    for(int i=0;i<size;i++){
+        QString key = QString::number(i);
+        QString invokeStr = methodJSON[key].toString();
+        addAPIMethod(parentItem,invokeStr);
     }
 }
 void APIJSONShow::addAPIMethod(QTreeWidgetItem *parentItem, QString methodStr){
