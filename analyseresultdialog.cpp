@@ -13,6 +13,20 @@ AnalyseResultDialog::AnalyseResultDialog(QWidget *parent) :
     showAnalyseResult();
 }
 
+AnalyseResultDialog::AnalyseResultDialog(QWidget *parent,QString methodPairPath) :
+    QDialog(parent),
+    ui(new Ui::AnalyseResultDialog)
+{
+    ui->setupUi(this);
+    vlayout = new QVBoxLayout();
+    vlayout->setSizeConstraint(QVBoxLayout::SetMinAndMaxSize);
+    ui->scrollArea->widget()->setLayout(vlayout);
+
+    this->methodPairPath = methodPairPath;
+    showAnalyseResult();
+}
+
+
 AnalyseResultDialog::~AnalyseResultDialog()
 {
     delete ui;
@@ -34,7 +48,7 @@ void AnalyseResultDialog::showAnalyseResult(){
  * @return
  */
 QStringList AnalyseResultDialog::obtainDifferentMethod(){
-    QString path = "C:/Users/17916/Desktop/selfAdapter/temp/anki/method-2.txt";
+    QString path = methodPairPath;
     QJsonArray jsonArray = APIJSONShow::readInstanceJSONArray(path);
     QStringList list;
     int size = jsonArray.size();
@@ -61,5 +75,9 @@ void AnalyseResultDialog::addDifferentMethod(QString result){
     QLabel *label = new QLabel();
     label->setText(result);
     vlayout->addWidget(label);
+}
+
+void AnalyseResultDialog::setMethodPairPath(QString methodPairPath){
+    this->methodPairPath = methodPairPath;
 }
 

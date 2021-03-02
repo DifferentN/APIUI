@@ -291,6 +291,7 @@
      <string>adapt</string>
     </property>
     <addaction name="actionAPIAdapt"/>
+    <addaction name="actionextract"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuRun"/>
@@ -310,6 +311,11 @@
   <action name="actionAPIAdapt">
    <property name="text">
     <string>APIAdapt</string>
+   </property>
+  </action>
+  <action name="actionextract">
+   <property name="text">
+    <string>extract</string>
    </property>
   </action>
  </widget>

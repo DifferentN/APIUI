@@ -19,7 +19,9 @@ class AnalyseResultDialog : public QDialog
 
 public:
     explicit AnalyseResultDialog(QWidget *parent = nullptr);
+    AnalyseResultDialog(QWidget *parent = nullptr,QString methodPairPath = nullptr);
     ~AnalyseResultDialog();
+    void setMethodPairPath(QString methodPairPath);
     QStringList obtainDifferentMethod();
     void addDifferentMethod(QString result);
     void showAnalyseResult();
@@ -27,6 +29,7 @@ public:
 private:
     Ui::AnalyseResultDialog *ui;
     QVBoxLayout *vlayout;
+    QString methodPairPath;
 };
 
 #endif // ANALYSERESULTDIALOG_H

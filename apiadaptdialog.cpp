@@ -85,8 +85,12 @@ void APIAdaptDialog::on_executeAPIAdapt_clicked()
 void APIAdaptDialog::on_apiAdaptFinish(QString result){
 
     ui->newAPI->setText(result);
+    int pos = result.lastIndexOf("\\");
+    QString methodPairPath = result.mid(0,pos+1)+"method.txt";
+    qDebug()<<methodPairPath<<endl;
     //展示分析结果
-    AnalyseResultDialog *dialog = new AnalyseResultDialog();
+    AnalyseResultDialog *dialog = new AnalyseResultDialog(this,methodPairPath);
+    dialog->setMethodPairPath(methodPairPath);
     dialog->setModal(false);
     dialog->show();
 }

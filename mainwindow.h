@@ -10,6 +10,7 @@
 #include "InstanceInfo.h"
 #include "apiurldialog.h"
 #include "APIAdaptDialog.h"
+#include "apkinfoextractdialog.h"
 #include <QVBoxLayout>
 #include <QLineEdit>
 #include <QLabel>
@@ -17,6 +18,7 @@
 #include <QThread>
 #include "apiadaptworkthread.h"
 #include "apigeneratethread.h"
+#include "apkinfoextract.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -41,6 +43,7 @@ public:
 signals:
     void startAPIAdapt(QString oldAPIPath,QString oldInvokePath,QString newInvokePath,JavaVM *jvm);
     void startAPIGenerate(QList<InstanceInfo *> *instanceInfos,JavaVM *jvm);
+    void startExtractAPKInfo(QString apkPath,JavaVM *jvm);
 private slots:
     void on_actionAdd_triggered();
     void on_clicked();
@@ -63,6 +66,10 @@ private slots:
 
     void on_apiGenerateFinish();
 
+    void on_actionextract_triggered();
+
+    void on_extractAPKInfo(QString apkPath);
+
 private:
     Ui::MainWindow *ui;
     LinkJava *linkJava;
@@ -79,6 +86,8 @@ private:
     void clearInputOrOutputLayout(QVBoxLayout *layout);
     //API自适应的窗口
     APIAdaptDialog *apiAdaptDialog;
+    //APK信息提取窗口
+    APKInfoExtractDialog *apkInfoExtractDialog;
     //执行API调整的线程
     QThread APIAdaptThread;
     //API调整任务
@@ -87,6 +96,10 @@ private:
     QThread APIGenerateTrueThread;
     //API生成
     APIGenerateThread *apiGenerateThread;
+    //提取APK信息的线程
+    QThread APKInfoExtractThread;
+    //APK信息提取
+    APKInfoExtract *apkInfoExtract;
 
 };
 #endif // MAINWINDOW_H

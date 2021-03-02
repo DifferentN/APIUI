@@ -25,6 +25,8 @@ SOURCES += \
     apiurldialog.cpp \
     apiadaptworkthread.cpp \
     apigeneratethread.cpp \
+    apkinfoextract.cpp \
+    apkinfoextractdialog.cpp \
     main.cpp \
     mainwindow.cpp \
     waitdialog.cpp
@@ -39,6 +41,8 @@ HEADERS += \
     apiurldialog.h \
     apiadaptworkthread.h \
     apigeneratethread.h \
+    apkinfoextract.h \
+    apkinfoextractdialog.h \
     mainwindow.h \
     waitdialog.h
 
@@ -46,6 +50,7 @@ FORMS += \
     analyseresultdialog.ui \
     apiadaptdialog.ui \
     apiurldialog.ui \
+    apkinfoextractdialog.ui \
     mainwindow.ui \
     waitdialog.ui
 

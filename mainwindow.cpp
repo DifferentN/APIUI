@@ -10,10 +10,13 @@ MainWindow::MainWindow(QWidget *parent)
     instanceInfos = new QList<InstanceInfo *>();
     urlDialog = new APIURLDialog(this,new QList<QString>());
     apiAdaptDialog = new APIAdaptDialog(this);
+    apkInfoExtractDialog = new APKInfoExtractDialog(this);
     apiAdaptWorkThread = new APIAdaptWorkThread();
     apiAdaptWorkThread->moveToThread(&APIAdaptThread);
     apiGenerateThread = new APIGenerateThread();
     apiGenerateThread->moveToThread(&APIGenerateTrueThread);
+    apkInfoExtract = new APKInfoExtract();
+    apkInfoExtract->moveToThread(&APKInfoExtractThread);
 
     connect(ui->treeWidget,SIGNAL(itemClicked(QTreeWidgetItem*,int)),this,SLOT(on_treeWidget_itemClicked(QTreeWidgetItem* ,int)));
     connect(urlDialog,SIGNAL(sendAPILink(QString,QString)),this,SLOT(setApiLink(QString,QString)));
@@ -25,6 +28,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this,SIGNAL(startAPIGenerate(QList<InstanceInfo *> *,JavaVM*)),apiGenerateThread,SLOT(on_startAPIGenerate(QList<InstanceInfo *> *,JavaVM*)));
     connect(apiGenerateThread,SIGNAL(apiGenerateFinish()),this,SLOT(on_apiGenerateFinish()));
     connect(&APIGenerateTrueThread,SIGNAL(finished(QPrivateSignal)),apiGenerateThread,SLOT(deleteLater()));
+
+    connect(apkInfoExtractDialog,SIGNAL(extractAPKInfo(QString)),this,SLOT(on_extractAPKInfo(QString)));
+    connect(this,SIGNAL(startExtractAPKInfo(QString,JavaVM *)),apkInfoExtract,SLOT(on_startExtractAPKInfo(QString,JavaVM *)));
+    connect(apkInfoExtract,SIGNAL(extractAPKInfoAdaptFinish(QString)),apkInfoExtractDialog,SLOT(on_extractAPKInfoAdaptFinish(QString)));
+    connect(&APKInfoExtractThread,SIGNAL(finished(QPrivateSignal)),apkInfoExtract,SLOT(deleteLater()));
 }
 
 MainWindow::~MainWindow()
@@ -368,4 +376,19 @@ void MainWindow::on_adaptAPI(QString oldAPIPath,QString oldInvokePath,QString ne
  */
 void MainWindow::on_sendNewAPIFilePath(QString newAPIPath){
     apiAdaptDialog->setNewAPIPath(newAPIPath);
+}
+
+/**
+ * @brief MainWindow::on_actionextract_triggered
+ * 打开提取APK中的类和方法信息的弹出窗口
+ */
+void MainWindow::on_actionextract_triggered()
+{
+    apkInfoExtractDialog->setModal(false);
+    apkInfoExtractDialog->show();
+}
+void MainWindow::on_extractAPKInfo(QString apkPath){
+
+    APKInfoExtractThread.start();
+    emit startExtractAPKInfo(apkPath,linkJava->getJVM());
 }
