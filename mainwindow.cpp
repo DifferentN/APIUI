@@ -127,9 +127,9 @@ void MainWindow::on_apiGenerateFinish(){
     urlDialog->show();
 }
 void MainWindow::setApiLink(QString apiName,QString paramNames){
-//    linkJava->setAPILinkInfo("execute.txt",apiName,paramNames);
+    linkJava->setAPILinkInfo("execute.json",apiName,paramNames);
     qDebug()<<"setLink start"<<endl;
-    linkJava->setAPILinkInfo("C:/Users/17916/Desktop/APIGenerate/AnkiDroid/Instances/"+apiName+".json",apiName,paramNames);
+//    linkJava->setAPILinkInfo("C:/Users/17916/Desktop/APIGenerate/AnkiDroid/Instances/"+apiName+".json",apiName,paramNames);
     qDebug()<<"setLink end"<<endl;
 }
 void MainWindow::on_treeWidget_itemClicked(QTreeWidgetItem *item, int column)
